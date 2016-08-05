@@ -83,7 +83,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TTSSTest\TTSS\TTSSLib.csproj">
+    <ProjectReference Include="..\..\TTSS\TTSSLib.csproj">
       <Project>{f778176c-232e-464a-98a1-20d726adb0bb}</Project>
       <Name>TTSSLib</Name>
     </ProjectReference>

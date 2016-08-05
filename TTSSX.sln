@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTSSX.Droid", "TTSSX\TTSSX.Droid\TTSSX.Droid.csproj", "{36928FC2-DC99-4B67-9115-3EB7B4DBFB3B}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTSSX.UWP", "TTSSX\TTSSX.UW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTSSX", "TTSSX\TTSSX\TTSSX.csproj", "{6D3CF23F-E8CA-4E46-A3B5-E1286A3EAB48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTSSLib", "..\TTSSTest\TTSS\TTSSLib.csproj", "{F778176C-232E-464A-98A1-20D726ADB0BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTSSLib", "TTSS\TTSSLib.csproj", "{F778176C-232E-464A-98A1-20D726ADB0BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
