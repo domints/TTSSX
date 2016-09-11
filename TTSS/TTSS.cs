@@ -46,7 +46,7 @@ namespace TTSSLib
         /// <returns>List of stringz.</returns>
         public async Task<List<string>> Autocomplete(string name)
         {
-            if(string.IsNullOrWhiteSpace(name))
+            if(string.IsNullOrWhiteSpace(name) || name.Length <= 1)
             {
                 return new List<string>();
             }
@@ -90,6 +90,38 @@ namespace TTSSLib
             }
 
             return ret;
+        }
+
+        public async Task<List<Stop>> AutocompleteObj(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name) || name.Length <= 1)
+            {
+                return new List<Stop>();
+            }
+
+            int count = 0;
+            string response = await GetString(string.Format(Req.Autocomplete, name));
+            List<Stop> preparsed = new List<Stop>();
+            JArray resp = JArray.Parse(response);
+            foreach (JObject obj in resp)
+            {
+                if (obj.Value<string>("type") != "stop")
+                {
+                    count = obj.Value<int>("count");
+                }
+                else
+                {
+                    preparsed.Add(JsonConvert.DeserializeObject<Stop>(obj.ToString()));
+                }
+            }
+
+            foreach(Stop s in preparsed)
+            {
+                s.Name = s.Name.Replace("&oacute;", "ó");
+                s.Valid = true;
+            }
+
+            return preparsed;
         }
 
         /// <summary>
