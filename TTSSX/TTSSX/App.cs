@@ -21,11 +21,13 @@ namespace TTSSX
         ListView lv;
         AutoCompleteView acv;
         Stop showedStop;
+        List<TramGetItem> tramsCache;
 
         public App()
         {
             ttss = new TTSS();
             m_blSuggestionList = new List<AutoCompleteStop>();
+            tramsCache = new List<TramGetItem>();
 
             var passageCell = new DataTemplate(typeof(PassageCell));
             passageCell.SetBinding(PassageCell.LineProperty, "Line");
@@ -47,7 +49,24 @@ namespace TTSSX
                 if(showedStop != null)
                 {
                     StopInfo si = await ttss.StopInfo(showedStop);
-                    lv.ItemsSource = si.OldPassages.Concat(si.ActualPassages);
+                    var passages = si.OldPassages.Concat(si.ActualPassages);
+                    var trams = await GetTramInfos(passages.Select(p => p.VehicleID).ToArray());
+
+                    lv.ItemsSource = passages.Select(p =>
+                    {
+                        TramGetItem item = trams.FirstOrDefault(t => t.TramId == p.VehicleID);
+                        string tramDesc = item == null ? null : $"{item.TramNo} - {item.Name}";
+                        return new PassageCellModel
+                        {
+                            Direction = p.Direction,
+                            Line = p.PatternText,
+                            Old = p.ActualRelativeTime < 0,
+                            RelativeTime = p.ActualRelativeTime,
+                            Time = p.MixedTime,
+                            TramDesc = tramDesc,
+                            Passage = p
+                        };
+                    });
                     lv.EndRefresh();
                 }
             });
@@ -74,7 +93,7 @@ namespace TTSSX
                         var passages = si.OldPassages.Concat(si.ActualPassages);
                         var trams = await GetTramInfos(passages.Select(p => p.VehicleID).ToArray());
 
-                        lv.ItemsSource = passages.Select(p =>
+                        var source = passages.Select(p =>
                         {
                             TramGetItem item = trams.FirstOrDefault(t => t.TramId == p.VehicleID);
                             string tramDesc = item == null ? null : $"{item.TramNo} - {item.Name}";
@@ -89,6 +108,13 @@ namespace TTSSX
                                 Passage = p
                             };
                         });
+                        lv.ItemsSource = source.ToList();
+                        /*PassageCellModel pcm = source.FirstOrDefault(cell => !cell.Old);
+                        if (pcm != null)
+                        {
+                            lv.ScrollTo(pcm, ScrollToPosition.Start, false);
+                        }*/
+
                         showedStop = stop;
                         break;
                     }
@@ -232,7 +258,7 @@ namespace TTSSX
         {
             TramGet rq = new TramGet
             {
-                Trams = tramids.Where(i => i != null).ToArray()
+                Trams = tramids.Where(i => i != null && !tramsCache.Any(t => t.TramId == i)).ToArray()
             };
 
             HttpClient hc = new HttpClient();
@@ -241,7 +267,7 @@ namespace TTSSX
             if(response.IsSuccessStatusCode)
             {
                 TramGetRs rs = await response.Content.ReadAsAsync<TramGetRs>();
-                return rs.Items;
+                return rs.Items.Concat(tramsCache.Where(t => tramids.Any(ti => ti == t.TramId))).ToArray();
             }
             else
             {
