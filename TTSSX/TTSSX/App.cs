@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TTSSLib;
+using TTSSX.Interfaces;
 using Xamarin.Forms;
 using XLabs.Forms.Controls;
 
@@ -22,9 +23,11 @@ namespace TTSSX
         AutoCompleteView acv;
         Stop showedStop;
         List<TramGetItem> tramsCache;
+        readonly IHttpService _httpService;
 
         public App()
         {
+            _httpService = DependencyService.Get<IHttpService>();
             ttss = new TTSS();
             m_blSuggestionList = new List<AutoCompleteStop>();
             tramsCache = new List<TramGetItem>();
@@ -50,12 +53,20 @@ namespace TTSSX
                 {
                     StopInfo si = await ttss.StopInfo(showedStop);
                     var passages = si.OldPassages.Concat(si.ActualPassages);
-                    var trams = await GetTramInfos(passages.Select(p => p.VehicleID).ToArray());
+                    TramGetItem[] trams = Enumerable.Empty<TramGetItem>().ToArray();
+                    try
+                    {
+                        trams = await GetTramInfos(passages.Select(p => p.VehicleID).ToArray());
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
 
                     lv.ItemsSource = passages.Select(p =>
                     {
                         TramGetItem item = trams.FirstOrDefault(t => t.TramId == p.VehicleID);
-                        string tramDesc = item == null ? null : $"{item.TramNo} - {item.Name}";
+                        string tramDesc = item == null ? null : $"{item.TramNo} - {item.Name}{(item.ExtraInfo != null ? $" [{item.ExtraInfo}]" : string.Empty)}";
                         return new PassageCellModel
                         {
                             Direction = p.Direction,
@@ -96,7 +107,7 @@ namespace TTSSX
                         var source = passages.Select(p =>
                         {
                             TramGetItem item = trams.FirstOrDefault(t => t.TramId == p.VehicleID);
-                            string tramDesc = item == null ? null : $"{item.TramNo} - {item.Name}";
+                            string tramDesc = item == null ? null : $"{item.TramNo} - {item.Name}{(item.ExtraInfo != null ? $" [{item.ExtraInfo}]" : string.Empty)}";
                             return new PassageCellModel
                             {
                                 Direction = p.Direction,
@@ -169,31 +180,10 @@ namespace TTSSX
                 Direction = i.Direction
             };
 
-            HttpClient hc = new HttpClient();
-            HttpResponseMessage response = await hc.PostAsJsonAsync("http://ttssx.dszymanski.pl/api/app", rq);
-
+            PassagePostRs rs = await _httpService.Post<PassagePostRq, PassagePostRs>("https://ttssx.dszymanski.pl/api/app", rq);
 #if DEBUG
-            string message = await response.Content.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-            IEnumerable<string> encoding = new List<string>();
-            if (response.Content.Headers.TryGetValues("Content-Encoding", out encoding) && (string.Join(" ", encoding).Contains("gzip") || (string.Join(" ", encoding).Contains("deflate"))))
+            if(rs != null)
             {
-                using (var responseStream = await response.Content.ReadAsStreamAsync())
-                using (var decompressedStream = new GZipStream(responseStream, CompressionMode.Decompress))
-                using (var streamReader = new StreamReader(decompressedStream))
-                {
-                    message = await streamReader.ReadToEndAsync();
-                }
-            }
-            else
-            {
-                message = await response.Content.ReadAsStringAsync();
-            }
-
-            if(message != null)
-            {
-                PassagePostRs rs = JsonConvert.DeserializeObject<PassagePostRs>(message);
-
                 await MainPage.DisplayAlert("Rezultat", $"PassageId: {rs.PassageInstances}, VehicleId: {rs.VehicleInstances}", "Zamknij");
             }
 #else
@@ -261,12 +251,9 @@ namespace TTSSX
                 Trams = tramids.Where(i => i != null && !tramsCache.Any(t => t.TramId == i)).ToArray()
             };
 
-            HttpClient hc = new HttpClient();
-            HttpResponseMessage response = await hc.PostAsJsonAsync("http://ttssx.dszymanski.pl/api/app/trams", rq);
-
-            if(response.IsSuccessStatusCode)
+            var rs = await _httpService.Post<TramGet, TramGetRs>("https://ttssx.dszymanski.pl/api/app/trams", rq);
+            if(rs != null)
             {
-                TramGetRs rs = await response.Content.ReadAsAsync<TramGetRs>();
                 return rs.Items.Concat(tramsCache.Where(t => tramids.Any(ti => ti == t.TramId))).ToArray();
             }
             else

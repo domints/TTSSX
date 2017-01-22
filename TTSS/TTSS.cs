@@ -70,7 +70,7 @@ namespace TTSSLib
             List<string> ret = new List<string>();
             foreach(Stop st in preparsed)
             {
-                st.Name = st.Name.Replace("&oacute;", "ó");
+                st.Name = WebUtility.HtmlDecode(st.Name);
                 if(m_dictStops.ContainsKey(st.Name.ToLower()))
                 {
                     if(!m_dictStops[st.Name.ToLower()].Any(s => s.ID == st.ID))
@@ -117,7 +117,7 @@ namespace TTSSLib
 
             foreach(Stop s in preparsed)
             {
-                s.Name = s.Name.Replace("&oacute;", "ó");
+                s.Name = WebUtility.HtmlDecode(s.Name);
                 s.Valid = true;
             }
 
