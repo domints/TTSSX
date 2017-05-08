@@ -34,19 +34,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CheckDate.cs" />
-    <Compile Include="Req.cs" />
-    <Compile Include="Route.cs" />
-    <Compile Include="Stop.cs" />
-    <Compile Include="StopInfo.cs" />
-    <Compile Include="StopPassage.cs" />
-    <Compile Include="TTSS.cs" />
+    <Compile Include="Converters\PassageConverter.cs" />
+    <Compile Include="Converters\PassageStatusConverter.cs" />
+    <Compile Include="Converters\StopCategoryConverter.cs" />
+    <Compile Include="Helpers\GeoHelper.cs" />
+    <Compile Include="Helpers\HttpHelper.cs" />
+    <Compile Include="Helpers\Request.cs" />
+    <Compile Include="Interfaces\IPassageService.cs" />
+    <Compile Include="Models\API\GeoStop.cs" />
+    <Compile Include="Models\API\GeoStops.cs" />
+    <Compile Include="Models\Data\Passage.cs" />
+    <Compile Include="Models\Data\Passages.cs" />
+    <Compile Include="Models\Data\StopData.cs" />
+    <Compile Include="Models\Enums\StopType.cs" />
+    <Compile Include="Services\PassageService.cs" />
+    <Compile Include="Services\StopService.cs" />
+    <Compile Include="Interfaces\IStopService.cs" />
+    <Compile Include="Models\Data\StopBase.cs" />
+    <Compile Include="Models\Enums\PassageStatus.cs" />
+    <Compile Include="Models\Internal\CheckDate.cs" />
+    <Compile Include="Models\Enums\StopPassagesType.cs" />
+    <Compile Include="Models\Enums\VehicleFloorType.cs" />
+    <Compile Include="Helpers\Addresses.cs" />
+    <Compile Include="Models\API\Route.cs" />
+    <Compile Include="Models\API\Stop.cs" />
+    <Compile Include="Models\API\StopInfo.cs" />
+    <Compile Include="Models\API\StopPassage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Data\Vehicle.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
