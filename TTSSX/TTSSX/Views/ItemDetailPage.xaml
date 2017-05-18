@@ -4,8 +4,8 @@
              xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
              x:Class="TTSSX.Views.ItemDetailPage"
              Title="{Binding Title}">
-	<StackLayout Spacing="20" Padding="15">
-        <autocomplete:SfAutoComplete x:Name="autocomplete" Watermark="Enter a country name"/>
+    <StackLayout Spacing="20" Padding="15">
+        <autocomplete:SfAutoComplete x:Name="autocomplete" Watermark="Nazwa przystanku"  SuggestionMode="Contains" AutoCompleteMode="Suggest" HeightRequest="40" MinimumPrefixCharacters="1" MaximumDropDownHeight="200" />
         <Label Text="{Binding Item.Text}" FontSize="Medium"/>
         <Label Text="{Binding Item.Description}" FontSize="Small"/>
     </StackLayout>

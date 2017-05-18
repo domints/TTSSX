@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
+             xmlns:ptr="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             x:Class="TTSSX.Views.StopDetailsPage"
+             Title="{Binding Title}">
+    <StackLayout Spacing="20" Padding="1" Margin="0" BackgroundColor="LightGray">
+        <listview:SfListView x:Name="listView" ItemsSource="{Binding Passages}" ItemSpacing="1">
+            <listview:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowSpacing="1" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.15*" />
+                            <RowDefinition Height="0.85*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" FontSize="Large" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{Binding Line}"/>
+                        <Label Grid.Column="1" Grid.Row="0" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Direction}" />
+                        <Label Grid.Column="1" Grid.Row="1" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" VerticalOptions="FillAndExpand" VerticalTextAlignment="Start" FontSize="Micro" Text="{Binding TramDescription}" />
+                        <Label Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="End" VerticalTextAlignment="Center" Text="{Binding MixedTime}" Margin="0,0,5,0"/>
+                    </Grid>
+                    <!--<StackLayout Orientation="Horizontal" Padding="0,3,0,3" HeightRequest="50">
+                        <Frame>
+                        <Label FontSize="Large" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="{Binding Line}" WidthRequest="40"/>
+                        </Frame>
+                        <Frame>
+                        <StackLayout Orientation="Vertical" BackgroundColor="Transparent" HorizontalOptions="StartAndExpand" Spacing="1">
+                            <Label HorizontalTextAlignment="Start" HorizontalOptions="StartAndExpand" Text="{Binding Direction}" />
+                            <Label HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start" FontSize="Micro" Text="{Binding TramDescription}" />
+                        </StackLayout>
+                        <Label HorizontalOptions="End" VerticalTextAlignment="Center" Text="{Binding MixedTime}"/>
+                        </Frame>
+                    </StackLayout>-->
+                </DataTemplate>
+            </listview:SfListView.ItemTemplate>
+        </listview:SfListView>
+    </StackLayout>
+</ContentPage>

@@ -10,7 +10,7 @@ namespace TTSSX.ViewModels
     public class ItemDetailViewModel : BaseViewModel
     {
         public Item Item { get; set; }
-        public List<StopBase> Stops { get; set; }
+        public List<StopData> Stops { get; set; }
         //public List<string> Stops { get; set; }
         public ItemDetailViewModel(Item item = null)
         {
@@ -21,8 +21,7 @@ namespace TTSSX.ViewModels
         public async Task LoadStops()
         {
             var ss = new StopService();
-            Stops = (await ss.GetAllStops()).Cast<StopBase>().ToList();
-            //Stops = new List<string> { "AAAA", "BBBB", "CCCC" };
+            Stops = await ss.GetAllStops();
         }
 
         int quantity = 1;

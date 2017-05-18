@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TTSSLib.Models.Enums
 {
-    [Flags]
-    public enum StopType : int
+    public enum ResponseReason
     {
-        Unknown = 1,
-        Tram = 2,
-        Other = 4     
+        Correct,
+        NoResults,
+        CommunicationError,
+        ServiceUnavailable
     }
 }

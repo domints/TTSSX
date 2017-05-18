@@ -16,6 +16,7 @@ namespace TTSSLib.Models.Data
         public int ActualRelative { get; set; }
         public string MixedTime { get; set; }
         public PassageStatus Status { get; set; }
+        public Vehicle Vehicle { get; set; }
 
         public override string ToString()
         {

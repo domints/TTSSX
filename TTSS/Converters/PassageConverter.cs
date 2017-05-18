@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TTSSLib.Helpers;
 using TTSSLib.Models.API;
 using TTSSLib.Models.Data;
 
@@ -20,7 +21,8 @@ namespace TTSSLib.Converters
                 MixedTime = passage.MixedTime,
                 Direction = passage.Direction,
                 Line = passage.PatternText,
-                Status = PassageStatusConverter.Convert(passage.StatusString)
+                Status = PassageStatusConverter.Convert(passage.StatusString),
+                Vehicle = passage.GetVehicle()
             };
         }
     }

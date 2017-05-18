@@ -12,8 +12,8 @@ namespace TTSSLib.Models.Data
     /// </summary>
     public class StopBase
     {
-        private string _name;
-        private int _id;
+        protected string _name;
+        protected int _id;
         /// <summary>
         /// Gets or sets the stop identifier.
         /// </summary>

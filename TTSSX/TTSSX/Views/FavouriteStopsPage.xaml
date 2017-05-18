@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"             
+             xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"             
+             x:Class="TTSSX.Views.FavouriteStopsPage"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout Padding="0,5,0,5">
+            <SearchBar x:Name="searchBar" Placeholder="Szukaj przystanku..." TextChanged="searchBar_TextChanged" HeightRequest="40"/>
+            <listview:SfListView x:Name="listView" ItemsSource="{Binding Stops}" ItemTapped="OnItemTapped">            
+                <listview:SfListView.ItemTemplate>
+                    <DataTemplate >
+                        <StackLayout VerticalOptions="Center" Padding="15,0,15,0">
+                            <Label Text="{Binding Name}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </listview:SfListView.ItemTemplate>
+            </listview:SfListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

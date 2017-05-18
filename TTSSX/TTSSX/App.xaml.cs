@@ -1,4 +1,8 @@
-﻿using TTSSX.Views;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using TTSSLib.Models.Enums;
+using TTSSLib.Services;
+using TTSSX.Views;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,19 +21,16 @@ namespace TTSSX
 
         public static void SetMainPage()
         {
+            var ss = new StopService();
+            var stops = Task.Run(() => ss.GetAllStops(StopType.Tram)).Result;
             Current.MainPage = new TabbedPage
             {
                 Children =
                 {
-                    new NavigationPage(new ItemsPage())
+                    new NavigationPage(new FavouriteStopsPage(stops))
                     {
-                        Title = "Browse",
+                        Title = "Przystanki",
                         Icon = Device.OnPlatform("tab_feed.png",null,null)
-                    },
-                    new NavigationPage(new AboutPage())
-                    {
-                        Title = "About",
-                        Icon = Device.OnPlatform("tab_about.png",null,null)
                     },
                 }
             };

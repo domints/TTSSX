@@ -8,22 +8,24 @@ using TTSSLib.Helpers;
 using TTSSLib.Interfaces;
 using TTSSLib.Models.API;
 using TTSSLib.Models.Data;
+using TTSSLib.Models.Enums;
 
 namespace TTSSLib.Services
 {
     public class StopService : IStopService
     {
-        public async Task<List<StopData>> GetAllStops()
+        public async Task<List<StopData>> GetAllStops(StopType requestedTypes = StopType.Other | StopType.Tram)
         {
-            string response = await Request.AllStops();
+            string response = await Request.AllStops().ConfigureAwait(false);
             var preparsed = JsonConvert.DeserializeObject<GeoStops>(response).Stops;
             return preparsed.Select(s => new StopData {
                 ID = int.Parse(s.ShortName),
-                Latitude = s.Latitude.ToCoordinate(),
-                Longitude = s.Longitude.ToCoordinate(),
+                Latitude = (double)s.Latitude.ToCoordinate(),
+                Longitude = (double)s.Longitude.ToCoordinate(),
                 Name = s.Name,
                 Type = StopCategoryConverter.Convert(s.Category)
             })
+            .Where(s => (requestedTypes & s.Type) == s.Type)
             .OrderBy(s => s.Name)
             .ToList();
         }
@@ -35,7 +37,7 @@ namespace TTSSLib.Services
                 return new List<StopBase>();
             }
 
-            string response = await Request.AutoComplete(name);
+            string response = await Request.AutoComplete(name).ConfigureAwait(false);
 
             var preparsed = JsonConvert.DeserializeObject<List<Stop>>(response);
 

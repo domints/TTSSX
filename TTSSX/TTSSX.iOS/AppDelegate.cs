@@ -1,5 +1,6 @@
 ﻿
 using Foundation;
+using Syncfusion.ListView.XForms.iOS;
 using UIKit;
 
 namespace TTSSX.iOS
@@ -10,7 +11,8 @@ namespace TTSSX.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
-			LoadApplication(new App());
+            SfListViewRenderer.Init();
+            LoadApplication(new App());
 
 			return base.FinishedLaunching(app, options);
 		}

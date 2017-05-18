@@ -40,13 +40,16 @@
     <Compile Include="Helpers\GeoHelper.cs" />
     <Compile Include="Helpers\HttpHelper.cs" />
     <Compile Include="Helpers\Request.cs" />
+    <Compile Include="Helpers\VehicleHelper.cs" />
     <Compile Include="Interfaces\IPassageService.cs" />
     <Compile Include="Models\API\GeoStop.cs" />
     <Compile Include="Models\API\GeoStops.cs" />
     <Compile Include="Models\Data\Passage.cs" />
     <Compile Include="Models\Data\Passages.cs" />
     <Compile Include="Models\Data\StopData.cs" />
+    <Compile Include="Models\Enums\ResponseReason.cs" />
     <Compile Include="Models\Enums\StopType.cs" />
+    <Compile Include="Models\Internal\Response.cs" />
     <Compile Include="Services\PassageService.cs" />
     <Compile Include="Services\StopService.cs" />
     <Compile Include="Interfaces\IStopService.cs" />

@@ -20,7 +20,7 @@ namespace TTSSX.Views
             InitializeComponent();
             BindingContext = this.viewModel = viewModel;
             autocomplete.DataSource = viewModel.Stops;
-            //autocomplete.DisplayMemberPath = "Name";
+            autocomplete.DisplayMemberPath = "Name";
         }
     }
 }

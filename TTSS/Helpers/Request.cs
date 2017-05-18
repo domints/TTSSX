@@ -1,21 +1,22 @@
 ﻿using System.Threading.Tasks;
 using TTSSLib.Models.Enums;
+using TTSSLib.Models.Internal;
 
 namespace TTSSLib.Helpers
 {
     internal static class Request
     {
-        internal static async Task<string> AllStops()
+        internal static async Task<Response> AllStops()
         {
-            return await HttpHelper.GetString(Addresses.AllStops);
+            return await HttpHelper.GetString(Addresses.AllStops).ConfigureAwait(false);
         }
 
-        internal static async Task<string> AutoComplete(string query)
+        internal static async Task<Response> AutoComplete(string query)
         {
-            return await HttpHelper.GetString(string.Format(Addresses.Autocomplete, query));
+            return await HttpHelper.GetString(string.Format(Addresses.Autocomplete, query)).ConfigureAwait(false);
         }
 
-        internal static async Task<string> StopPassages(int stopId, StopPassagesType type)
+        internal static async Task<Response> StopPassages(int stopId, StopPassagesType type)
         {
             string stype = string.Empty;
             switch (type)
@@ -28,7 +29,7 @@ namespace TTSSLib.Helpers
                     break;
             }
 
-            return await HttpHelper.GetString(string.Format(Addresses.PassageInfo, stopId, stype));
+            return await HttpHelper.GetString(string.Format(Addresses.PassageInfo, stopId, stype)).ConfigureAwait(false);
         }
     }
 }
