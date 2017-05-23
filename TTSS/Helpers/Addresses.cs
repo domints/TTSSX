@@ -29,5 +29,10 @@
         /// List of all stops with lat/lon information
         /// </summary>
         public static readonly string AllStops = @"http://www.ttss.krakow.pl/internetservice/geoserviceDispatcher/services/stopinfo/stops?left=-648000000&bottom=-324000000&right=648000000&top=324000000";
+
+        /// <summary>
+        /// The passage information for passages by TripId. {0} is Trip ID, {1} indicates if "arrival" or "departure". I suggest using "departure".
+        /// </summary>
+        public static readonly string TripPassages = @"http://www.ttss.krakow.pl/internetservice/services/tripInfo/tripPassages?tripId={0}&mode={1}";
     }
 }

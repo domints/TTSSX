@@ -36,7 +36,7 @@ namespace TTSSXTest
 
         private async void btLoadPassages_Click(object sender, EventArgs e)
         {
-            var pas = await _passageService.GetPassages(int.Parse(tbPAssagesSID.Text));
+            var pas = await _passageService.GetPassagesByStopId(int.Parse(tbPAssagesSID.Text));
             lbPassagesAct.DataSource = pas.ActualPassages;
             lbPassagesOld.DataSource = pas.OldPassages;
         }

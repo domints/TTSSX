@@ -19,7 +19,7 @@ namespace TTSSLib.Services
         private ResponseReason _respReason;
         public ResponseReason ResponseReason { get { return _respReason; } }
 
-        public async Task<Passages> GetPassages(int id, StopPassagesType type = StopPassagesType.Departure)
+        public async Task<Passages> GetPassagesByStopId(int id, StopPassagesType type = StopPassagesType.Departure)
         {
             var response = await Request.StopPassages(id, type).ConfigureAwait(false);
             var passage = JsonConvert.DeserializeObject<StopInfo>(response.Data);
@@ -29,9 +29,19 @@ namespace TTSSLib.Services
             return result;
         }
 
-        public async Task<Passages> GetPassages(StopBase stop, StopPassagesType type = StopPassagesType.Departure)
+        public async Task<Passages> GetPassagesByStop(StopBase stop, StopPassagesType type = StopPassagesType.Departure)
         {
-            return await GetPassages(stop.ID, type).ConfigureAwait(false);
+            return await GetPassagesByStopId(stop.ID, type).ConfigureAwait(false);
+        }
+
+        public async Task<Passages> GetPassagesByTripId(string id, StopPassagesType type = StopPassagesType.Departure)
+        {
+            var response = await Request.TripPassages(id, type).ConfigureAwait(false);
+            var passage = JsonConvert.DeserializeObject<TripPassages>(response.Data);
+            var result = new Passages();
+            result.ActualPassages = passage.ActualPassages.Select(ap => PassageConverter.Convert(ap)).ToList();
+            result.OldPassages = passage.OldPassages.Select(ap => PassageConverter.Convert(ap)).ToList();
+            return result;
         }
     }
 }

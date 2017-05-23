@@ -7,7 +7,8 @@ namespace TTSSLib.Interfaces
     public interface IPassageService
     {
         ResponseReason ResponseReason { get; }
-        Task<Passages> GetPassages(int id, StopPassagesType type = StopPassagesType.Departure);
-        Task<Passages> GetPassages(StopBase stop, StopPassagesType type = StopPassagesType.Departure);
+        Task<Passages> GetPassagesByStopId(int id, StopPassagesType type = StopPassagesType.Departure);
+        Task<Passages> GetPassagesByStop(StopBase stop, StopPassagesType type = StopPassagesType.Departure);
+        Task<Passages> GetPassagesByTripId(string id, StopPassagesType type = StopPassagesType.Departure);
     }
 }

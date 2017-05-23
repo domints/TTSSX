@@ -31,5 +31,21 @@ namespace TTSSLib.Helpers
 
             return await HttpHelper.GetString(string.Format(Addresses.PassageInfo, stopId, stype)).ConfigureAwait(false);
         }
+
+        internal static async Task<Response> TripPassages(string tripId, StopPassagesType type)
+        {
+            string stype = string.Empty;
+            switch (type)
+            {
+                case StopPassagesType.Arrival:
+                    stype = "arrival";
+                    break;
+                case StopPassagesType.Departure:
+                    stype = "departure";
+                    break;
+            }
+
+            return await HttpHelper.GetString(string.Format(Addresses.TripPassages, tripId, stype)).ConfigureAwait(false);
+        }
     }
 }

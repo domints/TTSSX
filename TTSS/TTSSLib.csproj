@@ -44,6 +44,9 @@
     <Compile Include="Interfaces\IPassageService.cs" />
     <Compile Include="Models\API\GeoStop.cs" />
     <Compile Include="Models\API\GeoStops.cs" />
+    <Compile Include="Models\API\PassageStop.cs" />
+    <Compile Include="Models\API\TripPassage.cs" />
+    <Compile Include="Models\API\TripPassages.cs" />
     <Compile Include="Models\Data\Passage.cs" />
     <Compile Include="Models\Data\Passages.cs" />
     <Compile Include="Models\Data\StopData.cs" />

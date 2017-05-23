@@ -17,6 +17,7 @@ namespace TTSSLib.Models.Data
         public string MixedTime { get; set; }
         public PassageStatus Status { get; set; }
         public Vehicle Vehicle { get; set; }
+        public string TripId { get; set; }
 
         public override string ToString()
         {

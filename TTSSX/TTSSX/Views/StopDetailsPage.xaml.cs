@@ -39,7 +39,7 @@ namespace TTSSX.Views
         private void StopDetailsPage_Appearing(object sender, EventArgs e)
         {
             var _passageService = new PassageService();
-            var passages = _passageService.GetPassages(_data).Result;
+            var passages = _passageService.GetPassagesByStop(_data).Result;
             var merged = passages.OldPassages.Concat(passages.ActualPassages).Select(p => new PassageListItem(p)).ToList();
             vm.Passages = new Helpers.ObservableRangeCollection<PassageListItem>(merged);
         }
